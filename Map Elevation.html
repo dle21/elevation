@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Showing Elevation Along a Path</title>
+    <title>Map Elevation</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -21,22 +21,27 @@
   </head>
   <body>
     <div>
-      <div id="map" style="height:250px;"></div>
+      <div id="map" style="height:800px;"></div>
       <div id="elevation_chart"></div>
       <script>
         // Load the Visualization API and the columnchart package.
       google.load('visualization', '1', {packages: ['columnchart']});
+      
+      var poly;
+      var map;
+      var elevator;
 
       function initMap() {
+        
         // The following path marks a path from Mt. Whitney, the highest point in the
         // continental United States to Badwater, Death Valley, the lowest point.
-        var path = [
+        // var path = [
 
           // West Branch
-            {lat: -37.717074532, lng: 145.738043553},
-            {lat: -37.71692, lng: 145.73973},
-            {lat:-37.71366, lng: 145.7473}
-            ];
+            // {lat: -37.717074532, lng: 145.738043553},
+            // {lat: -37.71692, lng: 145.73973},
+            // {lat:-37.71366, lng: 145.7473}
+            // ];
 
           // East Branch
             // {lat : -37.704613099, lng: 145.742565545},
@@ -53,37 +58,63 @@
             // {lat: -37.7258, lng: 145.75235}     
             // ];
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 20,
-          center: path[1],
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: {lat: -37.8136, lng: 144.9631},
           mapTypeId: 'terrain'
         });
-
-        // Create an ElevationService.
-        var elevator = new google.maps.ElevationService;
-
-        // Draw the path, using the Visualization API and the Elevation service.
-        displayPathElevation(path, elevator, map);
-      }
-
-      function displayPathElevation(path, elevator, map) {
+        
         // Display a polyline of the elevation path.
-        var poly = new google.maps.Polyline({
-          path: path,
+        poly = new google.maps.Polyline({
           strokeColor: '#0000CC',
           strokeOpacity: 0.4,
           map: map
         });
-        var sam_num = 256
+
+        // Create an ElevationService.
+        elevator = new google.maps.ElevationService;
+
+        // Draw the path, using the Visualization API and the Elevation service.
+        displayPathElevation(elevator, map);
+
+        // Add a listener for the click event
+        map.addListener('click', addLatLng);
         
-        console.log(google.maps.geometry.spherical.computeLength(poly.getPath()) + ", " + sam_num);
+      }
+      
+        // Handles click events on a map, and adds a new point to the Polyline.
+      function addLatLng(event) {
+        var path = poly.getPath();
+
+        // Because path is an MVCArray, we can simply append a new coordinate
+        // and it will automatically appear.
+        path.push(event.latLng);
+
+        // Add a new marker at the new plotted point on the polyline.
+        var marker = new google.maps.Marker({
+          position: event.latLng,
+          title: '#' + path.getLength(),
+          map: map
+        });
+
+        // Draw the path, using the Visualization API and the Elevation service.
+        displayPathElevation(elevator, map);
+      }
+
+      function displayPathElevation(elevator, map) {
+        var path = poly.getPath();
+        var sam_num = 256
+        console.log(google.maps.geometry.spherical.computeLength(path) + ", " + sam_num);
         // Create a PathElevationRequest object using this array.
         // Ask for 256 samples along that path.
         // Initiate the path request.
-        elevator.getElevationAlongPath({
-          'path': path,
-          'samples': sam_num
-        }, plotElevation);
+        
+        if(path.getLength() >= 2) {
+          elevator.getElevationAlongPath({
+            'path': path.getArray(),
+            'samples': sam_num
+          }, plotElevation);
+        }
       }
 
       // Takes an array of ElevationResult objects, draws the path on the map
@@ -122,7 +153,7 @@
       }
       </script>
       <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk&libraries=geometrycallback=initMap">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE9gz1xsioEqpJtuF8ef2SWr4lf6z7_ds&libraries=geometry&callback=initMap">
       </script>
     </div>
   </body>
