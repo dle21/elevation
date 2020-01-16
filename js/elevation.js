@@ -1,7 +1,7 @@
 function displayPathElevation() {
     var path = poly.getPath();
-    localStorage.setItem('size', 256);
-    var size = parseFloat(localStorage.getItem('size'));
+    localStorage.setItem('step', 256);
+    var step = parseFloat(localStorage.getItem('step'));
 
     localStorage.setItem('distance', google.maps.geometry.spherical.computeLength(path));
     // Create a PathElevationRequest object using this array.
@@ -29,7 +29,7 @@ function displayPathElevation() {
         infowindow.close()
         elevator.getElevationAlongPath({
         'path': path.getArray(),
-        'samples': size
+        'samples': step
         }, plotElevation);
     };
 }
@@ -53,27 +53,27 @@ function plotElevation(elevations, status) {
     // X axis.
     var data = new google.visualization.DataTable();
 
-    var size = parseFloat(localStorage.getItem('size'));
+    var step = parseFloat(localStorage.getItem('step'));
     var distance = parseFloat(localStorage.getItem('distance'));
 
-    var elev_str = "";
+    var data_str = "Distance, Elevation\n";
     data.addColumn('string', 'Distance');
     data.addColumn('number', 'Elevation');
     for (var i = 0; i < elevations.length; i++) {
-        var d = i * distance/size;
+        var d = i * distance/step;
 
-        if (i%20 == 0) {
+        if (i % 20 == 0 || i == elevations.length-1) {
             data.addRow([Math.round(d).toString(), elevations[i].elevation]);
         } else {
             data.addRow(['', elevations[i].elevation]);
         }
         
-        elev_str += elevations[i].elevation + "\n";
+        data_str += d + ", " + elevations[i].elevation + "\n";
     }
 
-    elev_str = elev_str.replace(/[\s\r\n]+$/, '');
+    data_str = data_str.replace(/[\s\r\n]+$/, '');
 
-    localStorage.setItem('elevation_string', elev_str);
+    localStorage.setItem('data', data_str);
 
     // Draw the chart using the data within its DIV.
     chart.draw(data, {
@@ -82,4 +82,24 @@ function plotElevation(elevations, status) {
         titleY: 'Elevation (m)',
         titleX: 'Distance (m)'
     });
+}
+
+function exportCSV() {
+    var data = localStorage.getItem('data');
+    var blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) { // IE 10+
+        navigator.msSaveBlob(blob, filename);
+    } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            // Browsers that support HTML5 download attribute
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "data.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
 }
