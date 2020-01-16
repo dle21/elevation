@@ -1,7 +1,9 @@
 function displayPathElevation() {
     var path = poly.getPath();
-    var sam_num = 256
-    console.log(google.maps.geometry.spherical.computeLength(path) + ", " + sam_num);
+    localStorage.setItem('size', 256);
+    var size = parseFloat(localStorage.getItem('size'));
+
+    localStorage.setItem('distance', google.maps.geometry.spherical.computeLength(path));
     // Create a PathElevationRequest object using this array.
     // Ask for 256 samples along that path.
     // Initiate the path request.
@@ -27,7 +29,7 @@ function displayPathElevation() {
         infowindow.close()
         elevator.getElevationAlongPath({
         'path': path.getArray(),
-        'samples': sam_num
+        'samples': size
         }, plotElevation);
     };
 }
@@ -50,19 +52,34 @@ function plotElevation(elevations, status) {
     // column here does double duty as distance along the
     // X axis.
     var data = new google.visualization.DataTable();
-    var ele = "";
-    data.addColumn('string', 'Sample');
+
+    var size = parseFloat(localStorage.getItem('size'));
+    var distance = parseFloat(localStorage.getItem('distance'));
+
+    var elev_str = "";
+    data.addColumn('string', 'Distance');
     data.addColumn('number', 'Elevation');
     for (var i = 0; i < elevations.length; i++) {
-        data.addRow(['', elevations[i].elevation]);
-        ele += elevations[i].elevation + ", ";
+        var d = i * distance/size;
+
+        if (i%20 == 0) {
+            data.addRow([Math.round(d).toString(), elevations[i].elevation]);
+        } else {
+            data.addRow(['', elevations[i].elevation]);
+        }
+        
+        elev_str += elevations[i].elevation + "\n";
     }
-    console.log(ele)
+
+    elev_str = elev_str.replace(/[\s\r\n]+$/, '');
+
+    localStorage.setItem('elevation_string', elev_str);
 
     // Draw the chart using the data within its DIV.
     chart.draw(data, {
         height: 150,
         legend: 'none',
-        titleY: 'Elevation (m)'
+        titleY: 'Elevation (m)',
+        titleX: 'Distance (m)'
     });
 }
