@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -19,20 +19,23 @@
 </head>
   </head>
   <body>
-    <div>
+    <div id="pdf">
       <div id="map" style="height:800px;"></div>
       <div id="elevation_chart"></div>
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="exportCSV()">Export</button>
-      <form action="#">
-        <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="sample1">
-          <label class="mdl-textfield__label" for="sample1">Text...</label>
-        </div>
-      </form>
-      <script src="js/map.js"></script>
-      <script src="js/deleteMenu.js"></script>
-      <script src="js/elevation.js"></script>
-      <script src="js/exportPDF.js"></script>
     </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="exportCSV()">Export CSV</button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="exportPDF()">Export PDF</button>
+    <form action="#">
+      <div  class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="sample1">
+        <label class="mdl-textfield__label" for="sample1">Text...</label>
+      </div>
+    </form>
+    <script src="js/map.js"></script>
+    <script src="js/deleteMenu.js"></script>
+    <script src="js/elevation.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="js/exportPDF.js"></script>
+    
   </body>
 </html>
