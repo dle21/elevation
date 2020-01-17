@@ -9,10 +9,19 @@ function displayPathElevation() {
     // Initiate the path request.
 
     if(path.getLength() == 1) {
+        var start = new google.maps.Marker({
+            position: path.getAt(0),
+            title: 'Start',
+            icon: 'images/start.png',
+            map: map
+       });
+
         elevator.getElevationForLocations({
-        'locations': path.getArray()
-        }, function(results, status) {
-        infowindow.setPosition(path.getAt(0));
+            'locations': path.getArray()
+            }, function(results, status) {
+            infowindow.setPosition(path.getAt(0));
+
+
         if (status === 'OK') {
             // Retrieve the first result
             if (results[0]) {
@@ -45,7 +54,7 @@ function plotElevation(elevations, status) {
         return;
     }
     // Create a new chart in the elevation_chart DIV.
-    var chart = new google.visualization.ColumnChart(chartDiv);
+    var chart = new google.visualization.LineChart(chartDiv);
 
     // Extract the data from which to populate the chart.
     // Because the samples are equidistant, the 'Sample'
@@ -95,7 +104,7 @@ function exportCSV() {
             // Browsers that support HTML5 download attribute
             var url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
-            link.setAttribute("download", "data.csv");
+            link.setAttribute("download", "pipeline-elevation.csv");
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
