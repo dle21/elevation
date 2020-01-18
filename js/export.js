@@ -44,20 +44,8 @@ function _exportCSV(data, name) {
     }
 }
 
-// function exportPDF() {
-//     var divContents = $(pdf).html();
-//     console.log(divContents);
-//     var printWindow = window.open('', '', 'height=400,width=800');
-//     printWindow.document.write('<html><head><title>PDF Viewer</title>');
-//     printWindow.document.write('</head><body>');
-//     printWindow.document.write(divContents);
-//     printWindow.document.write('</body></html>');
-//     printWindow.document.close();
-//     printWindow.print();
-// }
 
-// //Create PDf from HTML...
-function exportPDF() {
+function exportPDF(){
     var HTML_Width = $("#pdf").width();
     var HTML_Height = $("#pdf").height();
     var top_left_margin = 15;
@@ -68,17 +56,16 @@ function exportPDF() {
 
     var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
-    html2canvas($("#pdf")[0]).then(function (canvas) {
-        var imgData = canvas.toDataURL("image/jpeg", 1.0);
-        var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
-        for (var i = 1; i <= totalPDFPages; i++) { 
-            pdf.addPage(PDF_Width, PDF_Height);
-            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+    html2canvas(document.getElementById('pdf'), {useCORS: true}).then(function(canvas)
+        {
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+            for (var i = 1; i <= totalPDFPages; i++) { 
+                pdf.addPage(PDF_Width, PDF_Height);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+            }
+            pdf.save("Your_PDF_Name.pdf");
         }
-        pdf.save("Your_PDF_Name.pdf");
-        $("#pdf").hide();
-    });
-
-    $("#pdf").show();
+    );
 }
