@@ -1,5 +1,8 @@
 function displayPathElevation() {
     var path = poly.getPath();
+
+    localStorage.setItem("Alignment", path.getArray())
+
     localStorage.setItem('step', 256);
     var step = parseFloat(localStorage.getItem('step'));
 
@@ -82,33 +85,14 @@ function plotElevation(elevations, status) {
 
     data_str = data_str.replace(/[\s\r\n]+$/, '');
 
-    localStorage.setItem('data', data_str);
+    localStorage.setItem('elevation', data_str);
 
     // Draw the chart using the data within its DIV.
     chart.draw(data, {
-        height: 150,
+        height: '100%',
+        width: '100%',
         legend: 'none',
         titleY: 'Elevation (m)',
         titleX: 'Distance (m)'
     });
-}
-
-function exportCSV() {
-    var data = localStorage.getItem('data');
-    var blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
-    if (navigator.msSaveBlob) { // IE 10+
-        navigator.msSaveBlob(blob, filename);
-    } else {
-        var link = document.createElement("a");
-        if (link.download !== undefined) { // feature detection
-            // Browsers that support HTML5 download attribute
-            var url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", "pipeline-elevation.csv");
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
 }
