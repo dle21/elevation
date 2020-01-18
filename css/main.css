@@ -10,7 +10,6 @@
 }
 #map {
     height: 80%;
-    width: 100%;
 }
 #elevation_chart{
     height: 20%;
@@ -33,6 +32,9 @@
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
+}
+#elevation_chart {
+    height: 20%
 }
 .delete-menu {
     position: absolute;

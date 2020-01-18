@@ -8,7 +8,7 @@ var infowindow;
 var deleteMenu;
 
 function initialize() {
-    // google.charts.load("current", {packages:['corechart']});
+
     localStorage.setItem('step', 256);
 
     map = new google.maps.Map(document.getElementById('map'), {
