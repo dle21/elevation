@@ -74,7 +74,7 @@ function plotElevation(elevations, status) {
     for (var i = 0; i < elevations.length; i++) {
         var d = i * distance/step;
 
-        if (i % 20 == 0 || i == elevations.length-1) {
+        if (i % 5 == 0 || i == elevations.length-1) {
             data.addRow([Math.round(d).toString(), elevations[i].elevation]);
         } else {
             data.addRow(['', elevations[i].elevation]);
@@ -95,4 +95,8 @@ function plotElevation(elevations, status) {
         titleY: 'Elevation (m)',
         titleX: 'Distance (m)'
     });
+
+    google.visualization.events.addListener(chart, 'ready', function () {
+        chartDiv.innerHTML = '<img src="' + chart.getImageURI() + '">';
+      });
 }
