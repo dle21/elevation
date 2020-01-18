@@ -12,12 +12,12 @@ function displayPathElevation() {
     // Initiate the path request.
 
     if(path.getLength() == 1) {
-        var start = new google.maps.Marker({
-            position: path.getAt(0),
-            title: 'Start',
-            icon: 'images/start.png',
-            map: map
-       });
+    //     var start = new google.maps.Marker({
+    //         position: path.getAt(0),
+    //         title: 'Start',
+    //         icon: 'images/start.png',
+    //         map: map
+    //    });
 
         elevator.getElevationForLocations({
             'locations': path.getArray()
