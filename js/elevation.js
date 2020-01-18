@@ -3,8 +3,13 @@ function displayPathElevation() {
 
     localStorage.setItem("Alignment", path.getArray())
 
-    localStorage.setItem('step', 256);
-    var step = parseFloat(localStorage.getItem('step'));
+    var step = parseFloat(document.getElementById("step").value);
+
+    if(!step) {
+        step = 256;
+    }
+
+    localStorage.setItem('step', step);
 
     localStorage.setItem('distance', google.maps.geometry.spherical.computeLength(path));
     // Create a PathElevationRequest object using this array.

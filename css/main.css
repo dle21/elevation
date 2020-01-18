@@ -1,5 +1,6 @@
 /* Always set the map height explicitly to define the size of the div
 * element that contains the map. */
+
 #pdf {
     height: 90%;
     width: 98%;
@@ -11,9 +12,10 @@
 #map {
     height: 80%;
     width: 100%;
+    margin-bottom: 1%;
 }
 #elevation_chart{
-    height: 20%;
+    height: 19%;
 }
 /* Optional: Makes the sample page fill the window. */
     html, body {
@@ -51,4 +53,11 @@
 .delete-menu:hover {
     background: #eee;
 }
-
+.mdl-textfield {
+    width: 100px;
+}
+.h5 {
+    display: inline;
+    margin-left: 2%;
+    margin-right: 2%;
+}
