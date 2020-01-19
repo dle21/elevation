@@ -64,7 +64,7 @@ DeleteMenu.prototype.draw = function() {
     var point = projection.fromLatLngToDivPixel(position);
     this.div_delete.style.top = point.y + 'px';
     this.div_delete.style.left = point.x + 'px';
-    this.div_clear.style.top = point.y+20 + 'px';
+    this.div_clear.style.top = point.y + 25 + 'px';
     this.div_clear.style.left = point.x + 'px';
 };
 

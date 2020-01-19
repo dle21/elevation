@@ -6,7 +6,8 @@ function displayPathElevation() {
     var step = parseFloat(document.getElementById("step").value);
 
     if(!step) {
-        step = 256;
+        step = 54;
+        document.getElementById("stepLabel").innerHTML = step;
     }
 
     localStorage.setItem('step', step);
@@ -17,12 +18,6 @@ function displayPathElevation() {
     // Initiate the path request.
 
     if(path.getLength() == 1) {
-    //     var start = new google.maps.Marker({
-    //         position: path.getAt(0),
-    //         title: 'Start',
-    //         icon: 'images/start.png',
-    //         map: map
-    //    });
 
         elevator.getElevationForLocations({
             'locations': path.getArray()
@@ -77,8 +72,7 @@ function plotElevation(elevations, status) {
     data.addColumn('string', 'Distance');
     data.addColumn('number', 'Elevation');
     for (var i = 0; i < elevations.length; i++) {
-        var d = i * distance/step;
-
+        var d = i * distance/(step-1);
         if (i % 5 == 0 || i == elevations.length-1) {
             data.addRow([Math.round(d).toString(), elevations[i].elevation]);
         } else {
@@ -100,8 +94,4 @@ function plotElevation(elevations, status) {
         titleY: 'Elevation (m)',
         titleX: 'Distance (m)',
     });
-
-    // google.visualization.events.addListener(chart, 'ready', function () {
-    //     chartDiv.innerHTML = '<img src="' + chart.getImageURI() + '">';
-    //   });
 }
