@@ -1,5 +1,6 @@
 // Load the Visualization API and the columnchart package.
-google.load('visualization', '1', {packages: ['columnchart']});
+google.load('visualization', '1', {packages: ['linechart', 'line']});
+// google.charts.load('current', {packages: ['corechart', 'line']});
 
 var poly;
 var map;
@@ -19,9 +20,10 @@ function initialize() {
     // Display a polyline of the elevation path.
     poly = new google.maps.Polyline({
         editable: true,
-        strokeColor: '#0000CC',
-        strokeOpacity: 0.4,
-        strokeWeight: 2,
+        draggable: true,    
+        strokeColor: 'black', //'#0000CC',
+        strokeOpacity: 0.3,
+        strokeWeight: 3,
         icons: [{
             icon: {path: google.maps.SymbolPath.FORWARD_OPEN_ARROW},
             offset: '50%',

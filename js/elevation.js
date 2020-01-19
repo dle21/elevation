@@ -58,6 +58,7 @@ function plotElevation(elevations, status) {
     }
     // Create a new chart in the elevation_chart DIV.
     var chart = new google.visualization.LineChart(chartDiv);
+    // var chart = new google.charts.Line(chartDiv);
 
     // Extract the data from which to populate the chart.
     // Because the samples are equidistant, the 'Sample'
@@ -78,7 +79,7 @@ function plotElevation(elevations, status) {
         } else {
             data.addRow(['', elevations[i].elevation]);
         }
-        
+        // data.addRow([Math.round(d), elevations[i].elevation]);
         data_str += d + ", " + elevations[i].elevation + "\n";
     }
 
@@ -93,5 +94,22 @@ function plotElevation(elevations, status) {
         legend: 'none',
         titleY: 'Elevation (m)',
         titleX: 'Distance (m)',
+        // hAxis: {
+        //     title: 'Distance (m)',
+        //     titleTextStyle: {
+        //         fontName: 'arial',
+        //         fontSize: '20',
+        //         bold: 'true',
+        //     }
+        // },
+        // vAxis: {
+        //     title: 'Elevation (m)',
+        //     titleTextStyle: {
+        //         fontName: 'arial',
+        //         fontSize: '20',
+        //         bold: 'true',
+        //     }
+        // }
+
     });
 }
