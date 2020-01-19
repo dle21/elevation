@@ -69,4 +69,28 @@ function addLatLng(event) {
     displayPathElevation(elevator, map);
 }
 
+function latLngInput() {
+    var val = document.getElementById("latlng").value;
+    console.log(val)
+    console.log(val.split(",").length == 2)
+    console.log(parseFloat(val.split(",")[1]))
+    if(val.split(",").length == 2 & parseFloat(val.split(",")[1])) {
+        val = {lat: parseFloat(val.split(",")[0]), lng: parseFloat(val.split(",")[1])};
+        console.log(val);
+
+        var path = poly.getPath();
+        console.log(path);
+
+        // Because path is an MVCArray, we can simply append a new coordinate
+        // and it will automatically appear.
+        if (!deleteMenu.isOpen) {
+            path.push(val);
+            poly.setPath(path);
+        } else {
+            deleteMenu.isOpen = false;
+        }
+    }
+    
+}
+
 google.maps.event.addDomListener(window, 'load', initialize);

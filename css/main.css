@@ -4,21 +4,19 @@
 #pdf {
     height: 90%;
     width: 98%;
-    margin-top: 1%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1%;
 }
 #map {
-    height: 80%;
+    height: 69%;
     width: 100%;
     margin-bottom: 1%;
 }
 #elevation_chart{
-    height: 19%;
+    height: 20%;
 }
 /* Optional: Makes the sample page fill the window. */
-    html, body {
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -55,9 +53,27 @@
 }
 .mdl-textfield {
     width: 100px;
+    margin-left: 5px;
 }
-.h5 {
-    display: inline;
+h5 {
     margin-left: 2%;
-    margin-right: 2%;
+}
+#latlng {
+    margin-right: 1%;
+}
+.mdl-button {
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+#inputs {
+    height: 9%;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#gap:before{
+    content:" "; 
+    display:inline-block; 
+    width:30%;
 }

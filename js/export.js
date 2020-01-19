@@ -44,7 +44,6 @@ function _exportCSV(data, name) {
     }
 }
 
-
 function exportPDF(){
     var HTML_Width = $("#pdf").width();
     var HTML_Height = $("#pdf").height();
@@ -57,7 +56,7 @@ function exportPDF(){
     var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
     html2canvas(document.getElementById('pdf'), {useCORS: true}).then(function(canvas)
-        {
+        {   
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
             var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
             pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);

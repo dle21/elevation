@@ -20,21 +20,25 @@
 </head>
   </head>
   <body>
-    <h5 style="display:inline-block;">Data points: </h5>
-    <div  class="mdl-textfield mdl-js-textfield">
-      <input class="mdl-textfield__input" type="text" id="step" oninput="displayPathElevation()">
-      <label class="mdl-textfield__label" for="step">256</label>
-    </div>
+    <div id=inputs>
+      <h5 style="display:inline-block;">Data points: </h5>
+      <div  class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="step" oninput="displayPathElevation()">
+        <label class="mdl-textfield__label" for="step">256</label>
+      </div>
 
-    <h5 style="display:inline-block;">LatLng Cordinates: </h5>
-    <div  class="mdl-textfield mdl-js-textfield">
-      <input class="mdl-textfield__input" type="text" id="latlng" onInput="addLatLng(this.value)">
-      <label class="mdl-textfield__label" for="step">-37.8136, 144.9631</label>
+      <h5 style="display:inline-block;">LatLng coordinates: </h5>
+      <div  class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="latlng">
+        <label class="mdl-textfield__label" for="step">-37.8136, 144.9631</label>
+      </div>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="latLngInput()">Add</button>
+      <span id="gap"></span>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="export_data()">Export Elevation CSV</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="exportPDF()">Export PDF</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="exportSHP_excel()">Export SHP CSV</button>
+      
     </div>
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="export_data()">Export Elevation CSV</button>
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="exportPDF()">Export PDF</button>
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="exportSHP_excel()">Export SHP CSV</button>
-
     <div id="pdf">
       <div id="map"></div>
       <div id="elevation_chart"></div>
