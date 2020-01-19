@@ -98,10 +98,10 @@ function plotElevation(elevations, status) {
         width: '100%',
         legend: 'none',
         titleY: 'Elevation (m)',
-        titleX: 'Distance (m)'
+        titleX: 'Distance (m)',
     });
 
-    google.visualization.events.addListener(chart, 'ready', function () {
-        chartDiv.innerHTML = '<img src="' + chart.getImageURI() + '">';
-      });
+    // google.visualization.events.addListener(chart, 'ready', function () {
+    //     chartDiv.innerHTML = '<img src="' + chart.getImageURI() + '">';
+    //   });
 }
